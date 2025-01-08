@@ -1,10 +1,11 @@
 function createPlayer(name, type) {
-    return {name, type}
+    return {name, type};
 }
 
 const gameBoard = (function() {
     let board = Array(9).fill("");
 
+    // Returns a replica of the board array.
     const getBoard = () => [...board];
 
     const checkIfEmpty = (position) => {
@@ -49,53 +50,86 @@ const gameBoard = (function() {
 })();
 
 const gameManager = (function() {
-    const playGame = () => {
-        let player1 = createPlayer("Player1", "X");
-        let player2 = createPlayer("Player2", "O");
-        let hasWinner = false;
+    let player1, player2;
+    let canInput = false;
+    let round = 0;
 
-        // Asks for a the players' name.
-        player1.name = prompt("What is the first player's name?", player1.name);
-        player2.name = prompt("What is the second player's name?", player2.name);
-
-        // Game runs for 9 rounds.
-        for (let i = 0; i < 9; i++) {
-            const currentType = i % 2 === 0 ? "X" : "O";
-            let userInput;
-
-            do {
-                userInput = prompt(`Round ${i + 1} - Enter a number between 1 and 9:`);
-            } while (isNaN(parseInt(userInput)) || Number(userInput) < 1 || Number(userInput) > 9 || !gameBoard.checkIfEmpty(userInput - 1));
-
-            gameBoard.placeItem(userInput - 1, currentType);
-            console.log(gameBoard.getBoard());
-
-            // Runs if a player wins.
-            if (gameBoard.checkIfWinner(currentType)) {
-                if (currentType === "X") {
-                    alert(`${player1.name} wins!`);
-                } else {
-                    alert(`${player2.name} wins!`);
-                }
-
-                hasWinner = true;
-                break;
-            }
-        }
-
-        // Runs if there is a tie.
-        if (!hasWinner) alert("No one wins!");
-        gameBoard.clearBoard();
+    // Initializes pre-game values.
+    const startGame = (player1Name, player2Name) => {
+        player1 = createPlayer(player1Name, "X");
+        player2 = createPlayer(player2Name, "O");
+        canInput = true;
+        round = 0;
     }
 
-    return {playGame};
+    // Places an item depending on the current type.
+    const playRound = (number, currentType) => {
+        gameBoard.placeItem(number, currentType);
+        round++;
+    }
+
+    const endRound = () => {
+        gameBoard.clearBoard();
+        canInput = false;
+    };
+
+    const askingForPrompt = () => {
+        return canInput;
+    }
+
+    const getRound = () => {
+        return round;
+    }
+
+    const getPlayerName = (type) => {
+        if (type === "X") {
+            return player1.name;
+        } else {
+            return player2.name;
+        }
+    }
+
+    return {startGame, playRound, endRound, askingForPrompt, getRound, getPlayerName};
 })();
 
 const displayController = (function() {
-    
-})();
+    const startButton = document.querySelector("#start-button");
+    const gameSection = document.querySelector("#game-section");
+    const statusSection = document.querySelector("#status-section");
+    const player1Name = document.querySelector("#player1-name");
+    const player2Name = document.querySelector("#player2-name");
 
-//gameManager.playGame();
+    startButton.addEventListener("click", () => {
+        gameBoard.clearBoard();
+        gameManager.startGame(player1Name.value, player2Name.value);
+
+        for (let i = 0; i < gameSection.children.length; i++) {
+            gameSection.children[i].textContent = "";
+        }
+        statusSection.textContent = "";
+    })
+
+    for (let i = 0; i < gameSection.children.length; i++) {
+        gameSection.children[i].addEventListener("click", () => {
+            if (gameManager.askingForPrompt() && gameBoard.checkIfEmpty(i)) {
+                let currentType = gameManager.getRound() % 2 === 0 ? "X" : "O"
+                gameManager.playRound(i, currentType);
+                gameSection.children[i].textContent = currentType;
+                gameSection.children[i].style.color = currentType === "X" ? "red" : "black";
+
+                if (gameBoard.checkIfWinner(currentType)) {
+                    gameManager.endRound();
+                    statusSection.textContent = `${gameManager.getPlayerName(currentType)} wins!`;
+                }
+
+                if (gameManager.getRound() >= 9) {
+                    gameManager.endRound();
+                    statusSection.textContent = "No one wins.";
+                }
+            }
+        })
+    }
+})();
 
 
 
