@@ -1,10 +1,6 @@
-
-/* 
-user input for playing, then rounds
-process a game
-checks for wins
-take turns
-*/
+function createPlayer(name, type) {
+    return {name, type}
+}
 
 const gameBoard = (function() {
     let board = Array(9).fill("");
@@ -52,10 +48,6 @@ const gameBoard = (function() {
     return {getBoard, checkIfEmpty, placeItem, checkIfWinner, clearBoard};
 })();
 
-function createPlayer(name, type) {
-    return {name, type}
-}
-
 const gameManager = (function() {
     const playGame = () => {
         let player1 = createPlayer("Player1", "X");
@@ -72,14 +64,14 @@ const gameManager = (function() {
             let userInput;
 
             do {
-                userInput = prompt("Enter a number between 1 and 9:");
-            } while (isNaN(userInput) || Number(userInput) < 1 || Number(userInput) > 9 || gameBoard.checkIfEmpty(userInput - 1));
+                userInput = prompt(`Round ${i + 1} - Enter a number between 1 and 9:`);
+            } while (isNaN(parseInt(userInput)) || Number(userInput) < 1 || Number(userInput) > 9 || !gameBoard.checkIfEmpty(userInput - 1));
 
             gameBoard.placeItem(userInput - 1, currentType);
-            console.log(gameBoard.board);
+            console.log(gameBoard.getBoard());
 
             // Runs if a player wins.
-            if (gameBoard.checkIfWinner()) {
+            if (gameBoard.checkIfWinner(currentType)) {
                 if (currentType === "X") {
                     alert(`${player1.name} wins!`);
                 } else {
@@ -99,7 +91,11 @@ const gameManager = (function() {
     return {playGame};
 })();
 
-gameManager.playGame();
+const displayController = (function() {
+    
+})();
+
+//gameManager.playGame();
 
 
 

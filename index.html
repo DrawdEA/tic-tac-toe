@@ -4,8 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic Tac Toe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+AU+VIC+Guides&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+15&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+AU+VIC+Guides&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <script src="main.js" defer></script>
 </head>
 <body>
-    
+    <div id="name-section">
+        <label for="player1-name">
+            Player 1:
+            <input type="text">
+        </label>
+        <label for="player2-name">
+            Player 2:
+            <input type="text">
+        </label>
+    </div>
+    <div id="start-section">
+        <button id="start-button">Play Game</button>
+    </div>
+    <div id="game-section">
+        <button class="space one"></button>
+        <button class="space two"></button>
+        <button class="space three"></button>
+        <button class="space four"></button>
+        <button class="space five"></button>
+        <button class="space six"></button>
+        <button class="space seven"></button>
+        <button class="space eight"></button>
+        <button class="space nine"></button>
+    </div>
+    <div id="status-section"></div>
 </body>
 </html>

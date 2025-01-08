@@ -1,0 +1,76 @@
+/* 1. Use a more-intuitive box-sizing model */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+/* 2. Remove default margin */
+* {
+    margin: 0;
+}
+body {
+    /* 3. Add accessible line-height */
+    line-height: 1.5;
+    /* 4. Improve text rendering */
+    -webkit-font-smoothing: antialiased;
+}
+/* 5. Improve media defaults */
+img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+}
+/* 6. Inherit fonts for form controls */
+input, button, textarea, select {
+    font: inherit;
+}
+/* 7. Avoid text overflows */
+p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+}
+/* 8. Improve line wrapping */
+p {
+    text-wrap: pretty;
+}
+h1, h2, h3, h4, h5, h6 {
+    text-wrap: balance;
+}
+/* 9. Create a root stacking context */
+#root, #__next {
+    isolation: isolate;
+}
+
+
+
+/* Main styling */
+:root {
+    font-family: "Roboto", sans-serif;
+    font-weight: bold;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin: 30px;
+}
+
+#name-section {
+    display: flex;
+    gap: 25px;
+}
+
+#start-section {
+    margin-top: 30px;
+}
+
+#game-section {
+    display: grid;
+    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+}
+
+.space {
+    font-family: "Jersey 15", sans-serif;
+    padding: 0;
+    font-size: 60px;
+    text-align: center;
+    height: 100px;
+    width: 100px;
+}
