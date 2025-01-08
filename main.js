@@ -120,12 +120,10 @@ const displayController = (function() {
                 if (gameBoard.checkIfWinner(currentType)) {
                     gameManager.endRound();
                     statusSection.textContent = `${gameManager.getPlayerName(currentType)} wins!`;
-                }
-
-                if (gameManager.getRound() >= 9) {
+                } else if (gameManager.getRound() >= 9) {
                     gameManager.endRound();
                     statusSection.textContent = "No one wins.";
-                }
+                }    
             }
         })
     }
